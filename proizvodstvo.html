@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Производство — EasyMix</title>
+<meta name="description" content="Линия сушки песка и смесительный узел JS500 EasyMix: 15 узлов в 3D и расчёт производительности с узким местом.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='3' y='4' width='5' height='17' fill='%231c1914'/%3E%3Crect x='10' y='10' width='5' height='11' fill='%23d9411a'/%3E%3Crect x='17' y='7' width='5' height='14' fill='%231c1914'/%3E%3C/svg%3E">
+<script src="js/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="index.html"><span class="logo" aria-hidden="true"><i></i><i></i><i></i></span><b>EASYMIX</b><span>завод сухих смесей</span></a>
+  <nav class="menu" aria-label="Разделы">
+    <a href="index.html">Главная</a><a href="zavod.html">Завод в 3D</a><a href="proizvodstvo.html">Производство</a><a href="index.html#contacts">Контакты</a>
+    <button class="theme" type="button" data-theme-toggle aria-label="Сменить тему"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg></button>
+  </nav>
+</div></header>
+
+<main>
+<section class="band tight" id="model"><div class="wrap">
+  <p class="eyebrow">Линия целиком</p>
+  <h1>От влажного песка до мешка</h1>
+  <p class="lead">Линия сушки песка и смесительный узел JS500 в одной цепочке. Сухой песок 0–0,7 мм из бункера хранения поднимается шнеком в бункер песка на дозировочной раме, оттуда вместе с гипсом и мукой — в скип, смеситель и на фасовку.</p>
+  <div class="stage" id="stage" style="margin-top:22px">
+    <svg id="lines"></svg><div id="tags"></div>
+    <div class="views" role="group" aria-label="Вид">
+      <button class="btn ghost sm" data-v="all" aria-pressed="true">Весь завод</button>
+      <button class="btn ghost sm" data-v="dry" aria-pressed="false">Сушка</button>
+      <button class="btn ghost sm" data-v="mix" aria-pressed="false">Смешивание</button>
+    </div>
+    <div class="ctrl"><button class="btn ghost" id="bExp" aria-pressed="false">Разнести узлы</button><button class="btn ghost" id="bFlow" aria-pressed="true">Поток</button><button class="btn ghost" id="bReset">Сбросить вид</button></div>
+  </div>
+  <p class="note" style="margin-top:12px">Хотите переставить узлы в цехе? Это делается на странице <a href="zavod.html">«Завод в 3D»</a>.</p>
+</div></section>
+
+<section class="band" id="nodes"><div class="wrap">
+  <h2>Пятнадцать узлов в одну линию</h2>
+  <div class="groups" id="groups"></div>
+</div></section>
+
+<section class="band dark" id="calc"><div class="wrap">
+  <h2>Сколько выдаёт завод и где узкое место</h2>
+  <p class="lead">Каждый узел пересчитан в тонны готовой смеси в час. Узлы сушки ограничивают смесь через долю песка в рецептуре: чем меньше песка, тем меньше они тормозят завод.</p>
+  <div class="calc">
+    <div class="inputs">
+      <label>Цель завода, т смеси/ч<input id="T" type="number" value="8" step="0.5" min="1"></label>
+      <label>Смена, ч<input id="sh" type="number" value="8" step="1" min="1"></label>
+      <h3>Рецептура (пример)</h3>
+      <div class="pct"><label>Песок, %<input id="ps" type="number" value="40" step="5"></label><label>Гипс, %<input id="pg" type="number" value="45" step="5"></label><label>Мука, %<input id="pf" type="number" value="15" step="5"></label></div>
+      <div class="sum" id="sum"></div>
+      <details><summary>Сушка песка</summary><div class="inputs">
+        <label>Влажность исходная, %<input id="w1" type="number" value="7" step="0.5" min="1"></label>
+        <label>Влажность конечная, %<input id="w2" type="number" value="0.5" step="0.1" min="0.1"></label>
+        <label>Газ на входе, °C<input id="t1" type="number" value="650" step="25"></label>
+        <label>Газ на выходе, °C<input id="t2" type="number" value="110" step="5"></label>
+        <label>Температура песка, °C<input id="t0" type="number" value="10" step="5"></label>
+        <label>Рукавов, шт<input id="nb" type="number" value="52" step="1"></label>
+        <label>Диаметр рукава, мм<input id="bd" type="number" value="130" step="5"></label>
+        <label>Длина рукава, м<input id="bl" type="number" value="2" step="0.1"></label>
+        <label class="full">Регенерация<select id="mode"><option value="0.8">«Дятел» — встряхивание (до 0,8 м/мин)</option><option value="1.5">Импульсная продувка (до 1,5 м/мин)</option></select></label>
+        <label>Лента конвейера, мм<input id="cbw" type="number" value="500" step="50"></label>
+      </div></details>
+      <details><summary>Смеситель JS500 и фасовка</summary><div class="inputs">
+        <label>Объём замеса, л<input id="bv" type="number" value="500" step="25"></label>
+        <label>Насыпная плотность смеси, т/м³<input id="rho" type="number" value="1.4" step="0.05"></label>
+        <label>Перемешивание, с<input id="tm" type="number" value="120" step="10"></label>
+        <label>Выгрузка, с<input id="td" type="number" value="20" step="5"></label>
+        <label>Шнек песка в скип, т/ч<input id="qs" type="number" value="15" step="1"></label>
+        <label>Питатель гипса, т/ч<input id="qg" type="number" value="10" step="1"></label>
+        <label>Питатель муки, т/ч<input id="qf" type="number" value="10" step="1"></label>
+        <label>Ход скипа, с<input id="tk" type="number" value="40" step="5"></label>
+        <label>Мешок, кг<input id="bag" type="number" value="25" step="5"></label>
+        <label>Одна фасовка, мешков/ч<input id="pk" type="number" value="200" step="10"></label>
+      </div></details>
+    </div>
+    <div>
+      <div class="big" id="bn">—</div><div class="bigl" id="bnl"></div>
+      <div class="bars" id="bars"></div>
+      <div class="ckpis" id="kpis"></div>
+    </div>
+  </div>
+</div></section>
+
+<section class="band" id="basis"><div class="wrap">
+  <h2>Допущения</h2>
+  <ul class="note" style="padding-left:20px">
+    <li>Связь участков — наклонный шнек ≈ 8 м под углом ≈ 24° от выпуска бункера хранения к бункеру песка на дозировочной раме. На эскизах его нет: длину, угол и место установки уточните. Производительность шнека принята 15 т/ч.</li>
+    <li>Рукава фильтра Ø130 × 2 м на эскизе не указаны и сильнее всего влияют на результат. Рецептура 40 / 45 / 15 — пример.</li>
+    <li>Бункер хранения сухого песка (≈ 8,6 т) работает как буфер: сушка может стоять, пока смеситель берёт песок из запаса, и наоборот.</li>
+    <li>Значения калькулятора запоминаются в этом браузере.</li>
+  </ul>
+</div></section>
+</main>
+
+<footer class="foot band"><div class="wrap">
+  <span>© <span data-year>2026</span> ТОО «ЭкоМикс» · EasyMix · Актобе, Промзона 679/17</span>
+  <span>Модель построена по эскизам от руки</span>
+</div></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
+<script src="js/equipment.js"></script>
+<script src="js/line.js"></script>
+</body>
+</html>

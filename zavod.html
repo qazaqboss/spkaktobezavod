@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Завод в 3D — EasyMix</title>
+<meta name="description" content="3D-модель площадки EasyMix: два арочных цеха, АБК и оборудование, которое можно расставлять по узлам.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='3' y='4' width='5' height='17' fill='%231c1914'/%3E%3Crect x='10' y='10' width='5' height='11' fill='%23d9411a'/%3E%3Crect x='17' y='7' width='5' height='14' fill='%231c1914'/%3E%3C/svg%3E">
+<script src="js/site.js"></script>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="index.html"><span class="logo" aria-hidden="true"><i></i><i></i><i></i></span><b>EASYMIX</b><span>завод сухих смесей</span></a>
+  <nav class="menu" aria-label="Разделы">
+    <a href="index.html">Главная</a><a href="zavod.html">Завод в 3D</a><a href="proizvodstvo.html">Производство</a><a href="index.html#contacts">Контакты</a>
+    <button class="theme" type="button" data-theme-toggle aria-label="Сменить тему"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg></button>
+  </nav>
+</div></header>
+
+<main>
+<section class="band tight"><div class="wrap">
+  <p class="eyebrow">Промзона, участок 679/17 · Актобе</p>
+  <h1>Завод в 3D и расстановка оборудования</h1>
+  <p class="lead">Вся площадка: два арочных цеха, АБК, дороги и забор. Каждый из 14 узлов оборудования можно взять мышью или пальцем и передвинуть отдельно, повернуть на 90° или перенести весь комплекс целиком. Шнек сухого песка тянется сам, а если узлы разнесли — на месте разрыва появляется трасса и её длина.</p>
+
+  <div class="editor">
+    <div>
+      <div class="stage" id="plant3d" tabindex="0" role="application" aria-label="3D-модель завода EasyMix. Стрелки — сдвинуть выбранный узел, R — повернуть.">
+        <div class="views" role="group" aria-label="Вид">
+          <button class="btn ghost sm" type="button" data-plant-view="home" aria-pressed="false">Весь завод</button>
+          <button class="btn ghost sm" type="button" data-plant-view="b1" aria-pressed="true">Цех №1</button>
+          <button class="btn ghost sm" type="button" data-plant-view="b2" aria-pressed="false">Цех №2</button>
+          <button class="btn ghost sm" type="button" data-plant-view="abk" aria-pressed="false">АБК</button>
+        </div>
+        <div class="tip" id="plant-tip" hidden></div>
+        <div class="hint">Тяните узел — сдвинуть · двойной клик — повернуть<br>Тяните фон — вращать · колесо — масштаб · правая кнопка — сдвиг вида</div>
+      </div>
+      <p id="lay-status" class="status" aria-live="polite" style="margin-top:14px"></p>
+    </div>
+
+    <aside class="panel" aria-label="Расстановка оборудования">
+      <h3>Что двигать</h3>
+      <div class="seg" role="group" aria-label="Режим">
+        <button type="button" data-mode="unit" aria-pressed="true">Отдельный узел</button>
+        <button type="button" data-mode="complex" aria-pressed="false">Весь комплекс</button>
+      </div>
+      <div class="units" id="unit-list"></div>
+      <h3>Сдвиг и поворот</h3>
+      <div class="moverow">
+        <div class="pad" role="group" aria-label="Сдвиг на 0,5 м">
+          <button class="u" type="button" data-nudge="0,-1" aria-label="На север 0,5 м">↑</button>
+          <button class="l" type="button" data-nudge="-1,0" aria-label="На запад 0,5 м">←</button>
+          <button class="d" type="button" data-nudge="0,1" aria-label="На юг 0,5 м">↓</button>
+          <button class="r" type="button" data-nudge="1,0" aria-label="На восток 0,5 м">→</button>
+        </div>
+        <div class="btns" style="flex-direction:column;align-items:stretch">
+          <button id="lay-rot" type="button" class="btn sm">↻ Повернуть на 90°</button>
+          <button id="lay-unit-reset" type="button" class="btn ghost sm">Вернуть на место</button>
+        </div>
+      </div>
+      <p class="note" style="margin:0">Шаг стрелок 0,5 м (с Shift — 2 м). Стрелки на клавиатуре и клавиша R работают, когда 3D-окно в фокусе.</p>
+      <div class="btns">
+        <button id="lay-share" type="button" class="btn ghost sm">Ссылка на расстановку</button>
+        <button id="lay-shell" type="button" class="btn ghost sm">Арки: прозрачные</button>
+        <button id="lay-reset" type="button" class="btn ghost sm">Исходная расстановка</button>
+      </div>
+    </aside>
+  </div>
+</div></section>
+
+<section class="band alt"><div class="wrap grid2">
+  <div>
+    <h2>Трассы между узлами</h2>
+    <p class="note">Как передаётся материал от узла к узлу. «Вплотную» — узлы стоят как на эскизе. Если узел отодвинуть больше чем на 0,5 м, между ними понадобится конвейер, шнек или газоход — длина показана здесь и жёлтой трубой в модели.</p>
+    <div class="scroll"><table class="conns"><thead><tr><th>Трасса</th><th style="text-align:right">Длина / разрыв</th><th>Статус</th></tr></thead><tbody id="conn-body"></tbody></table></div>
+  </div>
+  <div>
+    <h2>Что проверяет модель</h2>
+    <ul class="note" style="padding-left:20px">
+      <li><b>Стены цеха.</b> Узел не выйдет за стены: его подтягивает обратно. Перетащите узел к другому цеху — он переедет туда.</li>
+      <li><b>Высота арки.</b> Каждая деталь сравнивается с высотой арки над её краем с запасом 0,3 м. Высокие узлы — элеватор 6,5 м, фильтр 6,5 м, конвейер 5,5 м — держите ближе к оси цеха.</li>
+      <li><b>Столкновения.</b> Площадки узлов не должны наезжать друг на друга. Узлы, которые и на эскизе стоят вплотную (горелка и барабан, барабан и сито), не считаются.</li>
+      <li><b>Шнек сухого песка.</b> Не длиннее 12 м и не круче 45°.</li>
+    </ul>
+    <p class="note">Расстановка запоминается в этом браузере. Кнопка «Ссылка на расстановку» копирует адрес, по которому коллега увидит ту же расстановку.</p>
+  </div>
+</div></section>
+
+<section class="band"><div class="wrap">
+  <h2>Здания на участке</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>Объект</th><th>Размер</th><th>Где стоит</th></tr></thead>
+    <tbody>
+      <tr><td><b>Цех №1</b></td><td>18 × 40 м · H 10 м</td><td>Южный арочный ангар. Ворота на восточном и западном торцах.</td></tr>
+      <tr><td><b>Цех №2</b></td><td>16 × 40 м · H 8 м</td><td>Северный арочный ангар, параллельно цеху №1. Ворота заезда с востока, у асфальтовой площадки.</td></tr>
+      <tr><td><b>АБК</b></td><td>12 × 5,5 м · 48 м²</td><td>К востоку от цеха №2, фасадом к асфальту, около 9 м от торца цеха.</td></tr>
+      <tr><td><b>Сушильный комплекс</b></td><td>≈ 29 × 5 м · H ≈ 6,6 м</td><td>В цехе №1: приёмный бункер, конвейер, горелка, барабан Ø1,1 × 11,8 м, рукавный фильтр, сито, элеватор, бункер сухого песка.</td></tr>
+      <tr><td><b>Смешивание и фасовка</b></td><td>≈ 7 × 9 м · H ≈ 4,9 м</td><td>В цехе №1: дозировочная рама с бункером песка, бункеры гипса и муки, скип, смеситель JS500, нижний бункер, две фасовки.</td></tr>
+      <tr><td><b>КПП</b></td><td>3,4 × 3,4 м</td><td>У въезда в северо-западном углу участка.</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note" style="margin-top:14px">Модель ориентировочная, для планирования. Размеры зданий — по эскизу МБС Ком, участок — по генплану, оборудование — по эскизам от руки. Высоту арки проверяйте по проекту.</p>
+</div></section>
+</main>
+
+<footer class="foot band"><div class="wrap">
+  <span>© <span data-year>2026</span> ТОО «ЭкоМикс» · EasyMix · Актобе, Промзона 679/17</span>
+  <a href="proizvodstvo.html">Расчёт производительности линии →</a>
+</div></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/controls/OrbitControls.js"></script>
+<script src="js/equipment.js"></script>
+<script src="js/plant.js"></script>
+</body>
+</html>
