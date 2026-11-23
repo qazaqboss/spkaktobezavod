@@ -122,7 +122,10 @@
 
   /* ---------- оборудование: 14 самостоятельных узлов ---------- */
   const E = EQ.build(T, { lineMat: SOFT });
-  const COMPLEX = { dry: { title: "Сушильный комплекс", home: [43, 97, 0] }, mix: { title: "Смешивание и фасовка", home: [64, 106, Math.PI] } };
+  // Въезд в цех №1 — восточные ворота со стороны асфальта. Линия сушки идёт от ворот вдоль северной стены
+  // (по правую руку при въезде): приёмный бункер у ворот → конвейер → барабан → сито → элеватор → бункер хранения;
+  // узел JS500 с фасовкой — в западном конце цеха, за бункером хранения.
+  const COMPLEX = { dry: { title: "Сушильный комплекс", home: [62.6, 97, Math.PI] }, mix: { title: "Смешивание и фасовка", home: [37.5, 103, Math.PI] } };
   const Y = new T.Vector3(0, 1, 0);
   const tmpB = new T.Box3();
   function partsBox(g) { // габарит без меток и без InstancedMesh (у него габарит считается неверно)
@@ -180,7 +183,7 @@
     const m = location.hash.match(/layout=([^&]+)/);
     if (m) layout = JSON.parse(decodeURIComponent(escape(atob(decodeURIComponent(m[1])))));
   } catch (e) { layout = null; }
-  if (!layout) try { layout = JSON.parse(localStorage.getItem("easymix-layout-v2") || "null"); } catch (e) {}
+  if (!layout) try { layout = JSON.parse(localStorage.getItem("easymix-layout-v3") || "null"); } catch (e) {}
   if (layout) units.forEach((u) => { const v = layout[u.k]; if (Array.isArray(v) && v.length === 3 && v.every(Number.isFinite)) apply(u, v); });
 
   function clampSet(set) {
@@ -193,7 +196,7 @@
   units.forEach((u) => clampSet([u]));
   function save() {
     const o = {}; units.forEach((u) => (o[u.k] = [+u.g.position.x.toFixed(2), +u.g.position.z.toFixed(2), +u.g.rotation.y.toFixed(4)]));
-    try { localStorage.setItem("easymix-layout-v2", JSON.stringify(o)); } catch (e) {}
+    try { localStorage.setItem("easymix-layout-v3", JSON.stringify(o)); } catch (e) {}
     if (location.hash.includes("layout=")) history.replaceState(null, "", location.pathname);
     return o;
   }
@@ -316,7 +319,7 @@
   document.querySelectorAll("[data-plant-view]").forEach((b) => b.addEventListener("click", () => {
     document.querySelectorAll("[data-plant-view]").forEach((x) => x.setAttribute("aria-pressed", String(x === b))); go(VIEWS[b.dataset.plantView]);
   }));
-  const labels = [["Цех №1", "18 × 40 м · H 10 м", [32.7, 10.8, 100.5]], ["Цех №2", "16 × 40 м · H 8 м", [52.7, 9.5, 32.4]], ["АБК", "12 × 5,5 м", [88, 5.2, 22.5]], ["КПП", "въезд", [2.9, 4.2, 2.9]]]
+  const labels = [["Цех №1", "18 × 40 м · H 10 м", [52.7, 11.2, 100.5]], ["Въезд в цех №1", "ворота со стороны асфальта", [72.9, 5.4, 100.5]], ["Цех №2", "16 × 40 м · H 8 м", [52.7, 9.5, 32.4]], ["АБК", "12 × 5,5 м", [88, 5.2, 22.5]], ["КПП", "въезд", [2.9, 4.2, 2.9]]]
     .map(([t, s, p]) => { const el = document.createElement("div"); el.className = "tag plain"; el.innerHTML = `<b>${t}</b><small>${s}</small>`; host.appendChild(el); return { el, p: new T.Vector3(...p) }; });
   const tmpV = new T.Vector3();
   const place = (el, v) => { const w = host.clientWidth, h = host.clientHeight; v.project(cam); const hidden = v.z > 1 || Math.abs(v.x) > 1.1 || Math.abs(v.y) > 1.1; el.style.display = hidden ? "none" : ""; el.style.transform = `translate(${((v.x + 1) / 2) * w}px, ${((1 - v.y) / 2) * h}px) translate(-50%, -100%)`; };
