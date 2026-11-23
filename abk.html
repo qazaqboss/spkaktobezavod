@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>АБК изнутри — EasyMix</title>
+<meta name="description" content="Административно-бытовой корпус EasyMix в 3D: загляните внутрь или пройдитесь по холлу, отделу продаж, бухгалтерии и кухне.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="EasyMix">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:title" content="АБК EasyMix изнутри">
+<meta property="og:description" content="Загляните внутрь или пройдитесь по холлу, отделу продаж, бухгалтерии и кухне.">
+<meta property="og:url" content="https://qazaqboss.github.io/spkaktobezavod/abk.html">
+<meta property="og:image" content="https://qazaqboss.github.io/spkaktobezavod/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="EasyMix — завод сухих строительных смесей, Актобе, Промзона 679/17">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://qazaqboss.github.io/spkaktobezavod/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='3' y='4' width='5' height='17' fill='%231c1914'/%3E%3Crect x='10' y='10' width='5' height='11' fill='%23d9411a'/%3E%3Crect x='17' y='7' width='5' height='14' fill='%231c1914'/%3E%3C/svg%3E">
+<script src="js/site.js"></script>
+<style>
+  .stage.walking{cursor:grab}.stage.walking:active{cursor:grabbing}
+  .hud{position:absolute;left:14px;top:62px;z-index:2;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 12px;box-shadow:var(--shadow);pointer-events:none;max-width:calc(100% - 28px)}
+  .hud b{display:block;font-size:15px}.hud span{display:block;font-size:13px;color:var(--mute);min-height:1.2em}
+  .cross{position:absolute;left:50%;top:50%;width:14px;height:14px;margin:-7px 0 0 -7px;pointer-events:none;z-index:2}
+  .cross::before,.cross::after{content:"";position:absolute;background:#fff;box-shadow:0 0 0 1px #0006}.cross::before{left:6px;top:0;width:2px;height:14px}.cross::after{top:6px;left:0;height:2px;width:14px}
+  .wpad{position:absolute;right:14px;bottom:14px;z-index:2;display:grid;grid-template-columns:repeat(3,52px);grid-template-rows:repeat(2,52px);gap:6px;touch-action:none;user-select:none;-webkit-user-select:none}
+  .wpad button{border:1px solid var(--line);background:color-mix(in srgb,var(--card) 88%,transparent);border-radius:12px;font-size:20px;cursor:pointer;touch-action:none}
+  .wpad button:active{background:var(--acc);color:#fff;border-color:var(--acc)}
+  .wpad .f{grid-column:2}.wpad .l{grid-column:1;grid-row:2}.wpad .b{grid-column:2;grid-row:2}.wpad .r{grid-column:3;grid-row:2}.wpad .sl{grid-column:1;grid-row:1;font-size:14px}.wpad .sr{grid-column:3;grid-row:1;font-size:14px}
+  .cutbar{position:absolute;left:14px;bottom:14px;z-index:2;display:flex;gap:10px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:6px 14px;max-width:calc(100% - 28px)}
+  .cutbar input{accent-color:var(--acc);width:180px}.cutbar span{font-size:13px;color:var(--mute);white-space:nowrap}
+  .keys{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:14px;margin:0}.keys dt{font-weight:600;white-space:nowrap}.keys dd{margin:0;color:var(--mute)}
+  kbd{display:inline-block;border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:0 6px;font:600 12px/1.6 Inter,sans-serif;background:var(--bg)}
+  @media (max-width:600px){.hud{top:auto;bottom:140px}.cutbar input{width:110px}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="index.html"><span class="logo" aria-hidden="true"><i></i><i></i><i></i></span><b>EASYMIX</b><span>завод сухих смесей</span></a>
+  <nav class="menu" aria-label="Разделы">
+    <a href="index.html">Главная</a><a href="zavod.html">Завод в 3D</a><a href="abk.html">АБК</a><a href="proizvodstvo.html">Производство</a><a href="index.html#contacts">Контакты</a>
+    <button class="theme" type="button" data-theme-toggle aria-label="Сменить тему"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg></button>
+  </nav>
+</div></header>
+
+<main>
+<section class="band tight"><div class="wrap">
+  <p class="eyebrow">Промзона, участок 679/17 · к востоку от цеха №2</p>
+  <h1>АБК изнутри</h1>
+  <p class="lead">Корпус 12 × 5,5 м из двух каркасов, 48 м². Загляните сверху со срезом стен или зайдите внутрь: с асфальта через крыльцо в холл, направо бухгалтерия, налево отдел продаж, прямо кухня с котлом.</p>
+
+  <div class="editor">
+    <div>
+      <div class="stage" id="abk3d" tabindex="0" role="application" aria-label="3D-модель АБК. В режиме прогулки: W A S D или стрелки — идти, тянуть мышью — осматриваться.">
+        <div class="views" role="group" aria-label="Режим и вид">
+          <button class="btn ghost sm" type="button" data-abk-mode="orbit" aria-pressed="true">Заглянуть сверху</button>
+          <button class="btn ghost sm" type="button" data-abk-mode="walk" aria-pressed="false">Пройтись внутри</button>
+        </div>
+        <div class="tip" id="abk-tip" hidden></div>
+        <div class="cutbar" id="abk-cut-ui"><label for="abk-cut" class="mute" style="font-size:13px">Срез</label><input id="abk-cut" type="range" min="0.3" max="2.87" step="0.01" value="1.35"><span id="abk-cut-out">стены срезаны на 1,35 м</span></div>
+        <div id="abk-hud" class="hud" hidden aria-live="polite"><b id="abk-where">Улица, у АБК</b><span id="abk-look"></span></div>
+        <div id="abk-walk-ui" hidden>
+          <div class="cross" aria-hidden="true"></div>
+          <div class="wpad" role="group" aria-label="Движение: удерживайте кнопку">
+            <button class="sl" type="button" data-pad="sl" aria-label="Шаг влево">⇠</button>
+            <button class="f" type="button" data-pad="f" aria-label="Вперёд">▲</button>
+            <button class="sr" type="button" data-pad="sr" aria-label="Шаг вправо">⇢</button>
+            <button class="l" type="button" data-pad="l" aria-label="Повернуть налево">↺</button>
+            <button class="b" type="button" data-pad="b" aria-label="Назад">▼</button>
+            <button class="r" type="button" data-pad="r" aria-label="Повернуть направо">↻</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="panel" aria-label="Куда смотреть">
+      <h3>Заглянуть</h3>
+      <div class="btns">
+        <button class="btn ghost sm" type="button" data-abk-view="all" aria-pressed="true">Весь план</button>
+        <button class="btn ghost sm" type="button" data-abk-view="hall" aria-pressed="false">Вход</button>
+        <button class="btn ghost sm" type="button" data-abk-view="acc" aria-pressed="false">Бухгалтерия</button>
+        <button class="btn ghost sm" type="button" data-abk-view="sales" aria-pressed="false">Продажи</button>
+      </div>
+      <h3>Перейти внутрь</h3>
+      <div class="btns">
+        <button class="btn sm" type="button" data-spot="door">У входа</button>
+        <button class="btn ghost sm" type="button" data-spot="hall">Холл</button>
+        <button class="btn ghost sm" type="button" data-spot="acc">Бухгалтерия</button>
+        <button class="btn ghost sm" type="button" data-spot="sales">Отдел продаж</button>
+        <button class="btn ghost sm" type="button" data-spot="kitchen">Кухня</button>
+      </div>
+      <h3>Управление в прогулке</h3>
+      <dl class="keys">
+        <dt><kbd>W</kbd> <kbd>S</kbd> / <kbd>↑</kbd> <kbd>↓</kbd></dt><dd>вперёд, назад</dd>
+        <dt><kbd>A</kbd> <kbd>D</kbd></dt><dd>шаг в сторону</dd>
+        <dt><kbd>←</kbd> <kbd>→</kbd></dt><dd>повернуться</dd>
+        <dt>Тянуть мышью</dt><dd>осмотреться</dd>
+        <dt><kbd>Shift</kbd></dt><dd>быстрее</dd>
+      </dl>
+      <p class="note" style="margin:0">На телефоне — кнопки в углу окна и свайп по экрану. Сквозь стены и мебель не пройти, двери открыты.</p>
+    </aside>
+  </div>
+</div></section>
+
+<section class="band alt"><div class="wrap">
+  <h2>Помещения</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>Помещение</th><th>Площадь</th><th>Что внутри</th></tr></thead>
+    <tbody>
+      <tr><td><b>Холл</b></td><td>5 м²</td><td>Вход с асфальта, коврик, вешалка, банкетка. Направо дверь в бухгалтерию, налево — в отдел продаж, прямо — кухня.</td></tr>
+      <tr><td><b>Бухгалтерия</b></td><td>≈ 14 м²</td><td>Отдельный кабинет за дверью справа от входа. 2 стола у северной стены лицом к окнам, шкаф для архива, сейф, МФУ. Два окна на юг.</td></tr>
+      <tr><td><b>Отдел продаж</b></td><td>≈ 25 м²</td><td>Весь каркас 3 × 6 (кроме кухни) и западная часть длинного каркаса. 3 стола менеджеров вдоль северной стены, стеллаж с образцами мешков, переговорный стол и диван для клиентов у окон.</td></tr>
+      <tr><td><b>Кухня и котёл</b></td><td>4,5 м²</td><td>Столешница с мойкой, холодильник, чайник. Настенный котёл у северной стены, дымоход через стену.</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note" style="margin-top:14px">Перегородки — металлический профиль, гипсокартон и минвата 50 мм, около 80 мм. Межкомнатные двери 0,8–0,9 м, на бухгалтерию — с замком. Пол в кабинетах — ламинат, в холле и кухне — керамогранит. Котёл на кухне согласуйте с газовой службой: часто требуют окно и вытяжку, при электрокотле этого не нужно.</p>
+  <p class="note">Относительно эскиза в модели сдвинуты три вещи, чтобы по ней можно было ходить: банкетка в холле перенесена от двери в отдел продаж, вешалка — от двери в бухгалтерию, столы бухгалтерии — на 0,2 м от перегородки.</p>
+</div></section>
+</main>
+
+<footer class="foot band"><div class="wrap">
+  <span>© <span data-year>2026</span> ТОО «ЭкоМикс» · EasyMix · Актобе, Промзона 679/17</span>
+  <a href="zavod.html">← АБК на площадке</a>
+</div></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/controls/OrbitControls.js"></script>
+<script src="js/abk.js"></script>
+</body>
+</html>
