@@ -18,6 +18,7 @@
     acc: { pos: [22, 14, 16], tgt: [9.2, 1, 4], zoom: 1.9 },
     sales: { pos: [14, 14, 18], tgt: [2.3, 1, 2.4], zoom: 1.6 },
     hall: { pos: [14, 9, 18], tgt: [5.4, 1.2, 3.4], zoom: 2.4 },
+    septic: { pos: [26, 13, -14], tgt: [10.5, -0.8, -1.5], zoom: 1.5 },
   };
   ocam.position.set(...VIEWS.all.pos);
   const controls = new T.OrbitControls(ocam, renderer.domElement);
@@ -31,8 +32,8 @@
   const lamp = new T.PointLight(0xfff4e0, 0, 16, 1.6); lamp.position.set(6, 3.6, 3); scene.add(lamp);
 
   const PAL = () => window.easymixDark && window.easymixDark()
-    ? { ink: 0xa9aeb5, ground: 0x24291f, gravel: 0x4a463e, asph: 0x2c2d2f, wall: 0xcfd2d5, wallCut: 0x8e949a, wood: 0x8a6a4a, tile: 0x6c6f72, desk: 0xd8d5cf, deskLeg: 0x3a3d42, chair: 0x2f3237, screen: 0x15181c, cab: 0xbfbab0, safe: 0x50555b, sofa: 0x48607a, green: 0x2f7d4c, warm: 0xc4955c, plant: 0x3f7a3a, pot: 0x8a7a6a, steel: 0x9aa0a6, glass: 0x2c4a5e, door: 0x6b5440, bag1: 0x2d8a4e, bag2: 0xd9a227, bag3: 0x9aa0a6, rug: 0x3c4a5a, ceil: 0xd8dadc, concrete: 0x6d6c68 }
-    : { ink: 0x3a3d42, ground: 0xc9d6b4, gravel: 0xd9d3c6, asph: 0xa3a4a5, wall: 0xfafafa, wallCut: 0x6b7077, wood: 0xd9b88f, tile: 0xcfd2d4, desk: 0xf4f1ea, deskLeg: 0x3a3d42, chair: 0x3b3f45, screen: 0x1b1e22, cab: 0xe8e2d6, safe: 0x6b7178, sofa: 0x6e8bab, green: 0x2d8a4e, warm: 0xe3b47a, plant: 0x5a9a4a, pot: 0xb7a48e, steel: 0xb8bec4, glass: 0x8fb5cc, door: 0xa7835c, bag1: 0x2d8a4e, bag2: 0xd9a227, bag3: 0xb8bec4, rug: 0x9db0c2, ceil: 0xf4f4f2, concrete: 0xbab8b2 };
+    ? { ink: 0xa9aeb5, ground: 0x24291f, gravel: 0x4a463e, asph: 0x2c2d2f, wall: 0xcfd2d5, wallCut: 0x8e949a, wood: 0x8a6a4a, tile: 0x6c6f72, desk: 0xd8d5cf, deskLeg: 0x3a3d42, chair: 0x2f3237, screen: 0x15181c, cab: 0xbfbab0, safe: 0x50555b, sofa: 0x48607a, green: 0x2f7d4c, warm: 0xc4955c, plant: 0x3f7a3a, pot: 0x8a7a6a, steel: 0x9aa0a6, glass: 0x2c4a5e, door: 0x6b5440, bag1: 0x2d8a4e, bag2: 0xd9a227, bag3: 0x9aa0a6, rug: 0x3c4a5a, ceil: 0xd8dadc, tank: 0x4f6f45, lid: 0x3d6b35, pvc: 0xd2691e, stone: 0x6f6a62, concrete: 0x6d6c68 }
+    : { ink: 0x3a3d42, ground: 0xc9d6b4, gravel: 0xd9d3c6, asph: 0xa3a4a5, wall: 0xfafafa, wallCut: 0x6b7077, wood: 0xd9b88f, tile: 0xcfd2d4, desk: 0xf4f1ea, deskLeg: 0x3a3d42, chair: 0x3b3f45, screen: 0x1b1e22, cab: 0xe8e2d6, safe: 0x6b7178, sofa: 0x6e8bab, green: 0x2d8a4e, warm: 0xe3b47a, plant: 0x5a9a4a, pot: 0xb7a48e, steel: 0xb8bec4, glass: 0x8fb5cc, door: 0xa7835c, bag1: 0x2d8a4e, bag2: 0xd9a227, bag3: 0xb8bec4, rug: 0x9db0c2, ceil: 0xf4f4f2, tank: 0x6f9a5e, lid: 0x3f7a3a, pvc: 0xe07a2e, stone: 0x9d978b, concrete: 0xbab8b2 };
   let C = PAL();
   const M = {}; for (const k in C) if (k !== "ink") M[k] = new T.MeshLambertMaterial({ color: C[k] });
   M.glass.transparent = true; M.glass.opacity = 0.45; M.ceil.side = T.DoubleSide;
@@ -48,9 +49,9 @@
   const cyl = (r, h, m, x, y, z, name = "", seg = 20) => { const g = new T.CylinderGeometry(r, r, h, seg), o = new T.Mesh(g, m); o.position.set(x, y, z); o.castShadow = o.receiveShadow = true; o.userData.name = name; o.add(new T.LineSegments(new T.EdgesGeometry(g, 30), SOFT)); scene.add(o); return o; };
 
   /* ---------- основание и улица ---------- */
-  box(40, 0.2, 30, M.ground, 6, -0.1, 4, "", { edges: false, shadow: false });
+  const groundMesh = box(40, 0.2, 30, M.ground, 6, -0.1, 4, "", { edges: false, shadow: false });
   box(40, 0.06, 9, M.asph, 6, 0.03, 12.2, "Асфальт", { edges: false, shadow: false });
-  box(14.8, 0.2, 8.6, M.gravel, 6, 0.1, 2.9, "Подсыпка ПГС", { edges: false, shadow: false });
+  const gravelMesh = box(14.8, 0.2, 8.6, M.gravel.clone(), 6, 0.1, 2.9, "Подсыпка ПГС", { edges: false, shadow: false });
   box(12.2, 0.7, 2.7, M.wallCut, 6, 0.58, 4.25, "Цоколь · профлист"); box(6.2, 0.7, 3.1, M.wallCut, 3, 0.58, 1.5, "Цоколь · профлист");
   box(1.6, 0.94, 1.05, M.concrete, 6, 0.47, 6.1, "Крыльцо"); box(1.6, 0.55, 0.5, M.concrete, 6, 0.275, 6.85, "Ступень крыльца");
   const floor = (x0, z0, x1, z1, m, name) => box(x1 - x0, 0.04, z1 - z0, m, (x0 + x1) / 2, Y - 0.02, (z0 + z1) / 2, name, { edges: false, shadow: false });
@@ -172,6 +173,39 @@
   box(0.3, 0.2, 0.3, M.steel, 5.68, Y + 1.02, 2.1, "Чайник, микроволновка");
   for (const [x, z, a] of [[1.6, 5.35, "x"], [3.9, 5.35, "x"], [8.1, 5.35, "x"], [10.4, 5.35, "x"], [0.15, 1.5, "z"], [5.2, 2.85, "x"]]) box(a === "x" ? 0.9 : 0.08, 0.45, a === "x" ? 0.08 : 0.9, M.wall, x, Y + 0.45, z, "Радиатор ≈ 0,9 кВт");
 
+  /* ---------- септик и наружная канализация (к северу от АБК, под землёй) ----------
+     Выпуск из санузла через северную стену → ревизионный колодец на повороте → двухкамерный септик 2 м³
+     → фильтрующий колодец. Труба ПВХ Ø110, уклон 2 %. Расстояния по СП 32.13330: септик ≥ 5 м от фундамента,
+     фильтрующий колодец ≥ 8 м. Отметки: 0 — уровень земли, минус — глубина. */
+  const pipe = (a, b, r, m, name) => {
+    const A = new T.Vector3(...a), B = new T.Vector3(...b), d = B.clone().sub(A), L = d.length();
+    const g = new T.CylinderGeometry(r, r, L, 16), o = new T.Mesh(g, m); o.position.copy(A).addScaledVector(d, 0.5);
+    o.quaternion.setFromUnitVectors(new T.Vector3(0, 1, 0), d.normalize()); o.castShadow = true; o.userData.name = name; o.userData.under = true; scene.add(o); return o;
+  };
+  const under = (o) => { o.userData.under = true; return o; };
+  const SX = 11, SZ = -4.2; // центр септика
+  const P = "Канализация ПВХ Ø110 · уклон 2 % · глубина ≈ 1,2–1,3 м";
+  pipe([7.2, Y - 0.05, 3.35], [7.2, -1.15, 3.35], 0.055, M.pvc, "Стояк от унитаза под пол");
+  pipe([7.2, -1.15, 3.35], [7.2, -1.19, 1.5], 0.055, M.pvc, P + " · выпуск через фундамент");
+  pipe([7.2, -1.19, 1.5], [SX - 1.0, -1.3, SZ], 0.055, M.pvc, P);
+  under(cyl(0.2, 1.35, M.stone, 7.2, -0.6, 1.5, "Ревизионный колодец Ø400 на повороте трассы", 18));
+  cyl(0.24, 0.04, M.lid, 7.2, 0.24, 1.5, "Люк ревизионного колодца", 18); block(7.2, 1.5, 0.48, 0.48);
+  // септик: корпус 2,0 × 1,2 × 1,6 м, верх на глубине 0,9 м, две камеры 2 : 1
+  under(box(2.0, 1.6, 1.2, M.tank, SX, -1.7, SZ, "Септик двухкамерный 2 м³ · 2,0 × 1,2 × 1,6 м, верх на глубине 0,9 м"));
+  under(box(0.04, 1.5, 1.15, M.stone, SX + 0.3, -1.7, SZ, "Перегородка между камерами септика"));
+  for (const [x, n] of [[SX - 0.55, "1-я камера (отстойник)"], [SX + 0.65, "2-я камера (осветление)"]]) {
+    under(cyl(0.3, 0.98, M.tank, x, -0.41, SZ, `Горловина септика · ${n}`, 22));
+    cyl(0.34, 0.05, M.lid, x, 0.1, SZ, `Крышка септика · ${n} · откачка ассенизатором 1–2 раза в год`, 22); block(x, SZ, 0.68, 0.68);
+  }
+  pipe([SX - 0.9, -0.9, SZ - 0.45], [SX - 0.9, 0.7, SZ - 0.45], 0.055, M.pvc, "Вентиляционный стояк септика"); block(SX - 0.9, SZ - 0.45, 0.2, 0.2);
+  // фильтрующий колодец Ø1,5 м на щебёночной подушке
+  const FX = 14.5, FZ = -5.5;
+  pipe([SX + 1.0, -1.45, SZ], [FX - 0.7, -1.5, FZ + 0.3], 0.055, M.pvc, "Перелив из септика в фильтрующий колодец");
+  under(cyl(0.75, 2.0, M.stone, FX, -1.9, FZ, "Фильтрующий колодец Ø1,5 м · ж/б кольца с перфорацией", 28));
+  under(cyl(1.1, 0.4, M.gravel, FX, -3.1, FZ, "Щебёночная подушка 400 мм под фильтрующим колодцем", 28));
+  under(cyl(0.32, 0.9, M.stone, FX, -0.45, FZ, "Горловина фильтрующего колодца", 20));
+  cyl(0.36, 0.05, M.lid, FX, 0.06, FZ, "Люк фильтрующего колодца", 20); block(FX, FZ, 0.72, 0.72);
+
   /* ---------- подписи комнат ---------- */
   const ROOMS = [
     { t: "Отдел продаж", s: "≈ 25 м² · 3 места + переговорная зона", p: [2.25, Y + 0.05, 2.3], r: [[0, 0, 4.5, 5.5]] },
@@ -179,6 +213,7 @@
     { t: "Санузел", s: "≈ 2 м² · унитаз, раковина", p: [7.2, Y + 0.05, 3.95], r: [[6.5, 3, 7.9, 4.5]] },
     { t: "Холл", s: "5 м²", p: [5.5, Y + 0.05, 4.4], r: [[4.5, 3, 6.5, 5.5]] },
     { t: "Кухня · котёл", s: "4,5 м²", p: [5.25, Y + 0.05, 1.3], r: [[4.5, 0, 6, 3]] },
+    { t: "Септик 2 м³", s: "5,3 м от АБК · под землёй", p: [11, 0.35, -4.2], r: [[9.2, -7, 16, -1.2]] },
   ];
   const labels = ROOMS.map((rm) => { const el = document.createElement("div"); el.className = "tag"; el.innerHTML = `<b>${rm.t}</b><small>${rm.s}</small>`; host.appendChild(el); return { el, p: new T.Vector3(...rm.p) }; });
   const tmp = new T.Vector3();
@@ -193,15 +228,24 @@
   const go = (v) => { fly = { t: 0, p0: ocam.position.clone(), t0: controls.target.clone(), z0: ocam.zoom, p1: new T.Vector3(...v.pos), t1: new T.Vector3(...v.tgt), z1: v.zoom }; };
   document.querySelectorAll("[data-abk-view]").forEach((b) => b.addEventListener("click", () => {
     if (mode !== "orbit") setMode("orbit");
+    if (b.dataset.abkView === "septic") setUnder(true);
     document.querySelectorAll("[data-abk-view]").forEach((x) => x.setAttribute("aria-pressed", String(x === b))); go(VIEWS[b.dataset.abkView]);
   }));
   const cut = $("abk-cut"), cutOut = $("abk-cut-out");
   const fmt = (x) => x.toLocaleString("ru-RU", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   cut?.addEventListener("input", () => { cutH = +cut.value; cutOut.textContent = cutH >= H ? "стены целиком" : `стены срезаны на ${fmt(cutH)} м`; if (mode === "orbit") applyCut(); });
 
+  // подземная часть: земля полупрозрачная, видно трубы, септик и колодцы
+  let underOn = false; const underBtn = $("abk-under");
+  function setUnder(on) {
+    underOn = on;
+    for (const m of [groundMesh.material, gravelMesh.material, M.asph]) { m.transparent = on; m.opacity = on ? 0.28 : 1; m.depthWrite = !on; m.needsUpdate = true; }
+    if (underBtn) { underBtn.setAttribute("aria-pressed", String(on)); underBtn.textContent = on ? "Скрыть подземную часть" : "Показать подземную часть"; }
+  }
+  underBtn?.addEventListener("click", () => setUnder(!underOn));
   /* ---------- прогулка от первого лица ---------- */
   const R = 0.2, EYE = 1.6, me = { x: 6.0, z: 9.2, yaw: 0, pitch: -0.05, eye: 0.2 + EYE };
-  const SPOTS = { door: [6.0, 9.2, 0], hall: [5.95, 5.25, -0.45], acc: [7.0, 5.0, 1.3], wc: [5.85, 3.6, 1.57], sales: [3.6, 4.6, -1.3], kitchen: [5.0, 2.6, 0] };
+  const SPOTS = { door: [6.0, 9.2, 0], hall: [5.95, 5.25, -0.45], acc: [7.0, 5.0, 1.3], wc: [5.85, 3.6, 1.57], sales: [3.6, 4.6, -1.3], septic: [11.0, -1.4, 0], kitchen: [5.0, 2.6, 0] };
   function groundAt(x, z) {
     const inA = x >= 0 && x <= 12 && z >= 3 && z <= 5.6, inB = x >= 0 && x <= 6 && z >= 0 && z <= 3;
     if (inA || inB) return Y;
@@ -280,7 +324,7 @@
 
   /* ---------- подсказки ---------- */
   const tip = $("abk-tip"), ray = new T.Raycaster(), mouse = new T.Vector2();
-  const named = (h) => h.object.isMesh && h.object.visible && h.object.userData.name && h.object.userData.name !== "Потолок";
+  const named = (h) => h.object.isMesh && h.object.visible && h.object.userData.name && h.object.userData.name !== "Потолок" && !(h.object.userData.under && !underOn);
   renderer.domElement.addEventListener("pointermove", (e) => {
     if (mode !== "orbit" || !tip) return;
     const r = renderer.domElement.getBoundingClientRect(); mouse.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
@@ -308,7 +352,7 @@
   }
   new ResizeObserver(resize).observe(host); resize();
   let visible = true; new IntersectionObserver((en) => (visible = en[en.length - 1].isIntersecting), { rootMargin: "200px" }).observe(host);
-  function retheme() { C = PAL(); for (const k in M) if (C[k] !== undefined) M[k].color.setHex(C[k]); inks.forEach((m) => m.color.setHex(C.ink)); if (mode === "walk") scene.background = new T.Color(window.easymixDark() ? 0x1d2530 : 0xcfe0ec); }
+  function retheme() { C = PAL(); for (const k in M) if (C[k] !== undefined) M[k].color.setHex(C[k]); gravelMesh.material.color.setHex(C.gravel); inks.forEach((m) => m.color.setHex(C.ink)); if (mode === "walk") scene.background = new T.Color(window.easymixDark() ? 0x1d2530 : 0xcfe0ec); }
   new MutationObserver(retheme).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
   matchMedia("(prefers-color-scheme: dark)").addEventListener("change", retheme);
 

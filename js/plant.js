@@ -118,6 +118,14 @@
     box(1, 2.1, 0.06, M.roof, 88, 1.95, 25.03, { name: "Вход в АБК", soft: true });
     box(1.6, 0.9, 1.0, M.concrete, 88, 0.45, 25.5, { name: "Крыльцо", soft: true });
     box(2.2, 0.08, 1.2, M.roof, 88, 3.2, 25.6, { name: "Козырёк над входом", soft: true });
+    // септик к северу от АБК (под землёй): на поверхности люки и трасса. Начало координат АБК — (82; 19,5).
+    const lidM = new T.MeshLambertMaterial({ color: 0x3d6b35 }), pvcM = new T.MeshLambertMaterial({ color: 0xe07a2e });
+    const lid = (x, z, r, name) => { const o = new T.Mesh(new T.CylinderGeometry(r, r, 0.12, 20), lidM); o.position.set(x, 0.06, z); o.userData.name = name; o.add(new T.LineSegments(new T.EdgesGeometry(o.geometry, 30), SOFT)); scene.add(o); };
+    lid(92.45, 15.3, 0.34, "Септик 2 м³ · 1-я камера · 5,3 м от АБК (норма ≥ 5 м)"); lid(93.65, 15.3, 0.34, "Септик 2 м³ · 2-я камера");
+    lid(96.5, 14, 0.36, "Фильтрующий колодец Ø1,5 м · 8,1 м от АБК (норма ≥ 8 м)"); lid(89.2, 21, 0.24, "Ревизионный колодец канализации");
+    const route = [[89.2, 22.85], [89.2, 21], [92, 15.3], [94, 15.3], [96.5, 14]];
+    for (let i = 1; i < route.length; i++) { const [x0, z0] = route[i - 1], [x1, z1] = route[i], L = Math.hypot(x1 - x0, z1 - z0);
+      const o = new T.Mesh(new T.BoxGeometry(L, 0.03, 0.18), pvcM); o.position.set((x0 + x1) / 2, 0.03, (z0 + z1) / 2); o.rotation.y = -Math.atan2(z1 - z0, x1 - x0); o.userData.name = "Канализация ПВХ Ø110 · под землёй ≈ 1,2 м"; scene.add(o); }
   }
 
   /* ---------- оборудование: 14 самостоятельных узлов ---------- */
